@@ -1,0 +1,20 @@
+{% load i18n %}
+{% load cache %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>{% trans "Личный кабинет программы лояльности" %}</title>
+</head>
+<body>
+{% get_current_language as LANGUAGE_CODE %}
+  <h2>{% trans "Информация" %}</h2>
+  <p>{% trans "Имя" %}: {{account.username}}</p>
+  <p>{% trans "Баланс" %}: {{account.user.balance}}</p>
+  <p>{% trans "Текущий статус" %}: {{account.user.status}}</p>
+  <a href="{% url 'balance-replenishment'%}">
+  {% trans "Пополнить баланс" %}
+  </a>
+
+</body>
+</html>

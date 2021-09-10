@@ -1,0 +1,22 @@
+{% extends 'app_products/base.html' %}
+{% load i18n %}
+{% block title %}
+    {% for shop in shop.all %}
+        {{ shop.name}}
+    {% endfor %}
+{% endblock %}
+{% block content %}
+    {% for shop in shop.all %}
+        <h1>{% trans "Магазин" %}: {{ shop.name}}</h1>
+        {% for product in shop.products.all %}
+            <p>{% trans "Название товара" %}: {{ product.product_name}}</p>
+            <p>{% trans "Цена товара" %}: {{ product.price}}</p>
+        {% empty %}
+            <p>{% trans "Товаров нет" %}</p>
+        {% endfor %}
+    {% empty %}
+        <p>{% trans "Магазина нет" %}</p>
+    {% endfor %}
+
+
+{% endblock %}

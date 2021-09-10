@@ -1,0 +1,31 @@
+{% extends 'app_products/base.html' %}
+{% load i18n %}
+{% block title %}
+    {% trans "Товары" %}
+{% endblock %}
+{% block content %}
+    <h1>{% trans "Товары" %}</h1>
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'create_new_products'%}">{% trans "Создание нового товара" %}</a>
+            <a href="{% url 'shopping-cart'%}">{% trans "Корзина" %}</a>
+        {% else %}
+            <h3>{% trans "Вы не авторизованы на нашем сайте, создавать товары Вам запрещено" %}</h3>
+        {% endif %}
+        <ul>
+        {% for products in products_list %}
+            <li>
+                <a href="{% url 'products-detail' products.id %}">
+                {{ products.product_name }}
+                </a>
+                {% for shop in products.name.all %}
+                    <p>{{ shop.name }}</p>
+                    <a href="{% url 'marketplace-detail' shop.id%}">{% trans "Личная страница магазина" %}</a>
+                {% empty %}
+                    <p>{% trans "Магазинов нет" %}</p>
+                {% endfor %}
+            </li>
+        {% empty %}
+            <p>{% trans "Записей нет" %}</p>
+        {% endfor %}
+        </ul>
+{% endblock %}

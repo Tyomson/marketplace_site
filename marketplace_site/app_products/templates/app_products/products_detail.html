@@ -1,0 +1,25 @@
+{% extends 'app_products/base.html' %}
+{% load i18n %}
+{% block title %}
+    {{ object.product_name }}
+{% endblock %}
+{% block content %}
+    <h1>{{ object.product_name}}</h1>
+        <h2>{% trans "Название товара" %}: {{ object.product_name}}</h2>
+        <p>{% trans "Остаток товара" %}: {{ object.stocks}}</p>
+        <p>{% trans "Цена товара" %}: {{ object.price}}</p>
+        <p>{% trans "Магазины в которых можно купить товар" %}</p>
+            {% for shop in object.name.all %}
+            <p>{{ shop.name}}</p>
+            <form method="post" enctype="multipart/form-data">
+                <input type="hidden" name="shop_id" value="{{ shop.id }}">
+                {% csrf_token %}
+                {{form.as_p}}
+                <button type="submit">Добавить в корзину</button>
+            </form>
+            {% empty %}
+                <p>{% trans "Магазинов нет" %}</p>
+            {% endfor %}
+
+
+{% endblock %}

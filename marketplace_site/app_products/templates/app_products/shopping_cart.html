@@ -1,0 +1,25 @@
+{% extends 'app_products/base.html' %}
+{% load i18n %}
+{% block title %}
+    {% trans "Корзина" %}
+{% endblock %}
+{% block content %}
+    <h1>{% trans "Корзина" %}</h1>
+
+    <form method="post" enctype="multipart/form-data">
+        {% for cart in shopping_cart %}
+            <h2>{% trans "Название товара" %}: {{ cart.product_id.product_name }}</h2>
+            <p>{% trans "Количество в корзине" %}: {{ cart.product_quantity }}</p>
+            <p>{% trans "Цена товара за одну штуку" %}: {{ cart.product_id.price }}</p>
+            <p>{% trans "Сумма товаров" %}: {{ cart.cart_summ }}</p>
+            {% csrf_token %}
+            <label for="id_accept">Подтверждение покупки:</label>
+            <input type="checkbox" name="accept{{ cart.id }}" id="id_accept">
+        {% empty %}
+            <p>{% trans "Корзина пустая" %}</p>
+        {% endfor %}
+
+        <button type="submit">Купить</button>
+    </form>
+
+{% endblock %}
